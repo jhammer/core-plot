@@ -550,7 +550,7 @@ CPTImageSlices;
                                                                                bitsPerPixel:32];
 
             NSGraphicsContext *bitmapContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:imageRep];
-            CGContextRef context             = (CGContextRef)bitmapContext.graphicsPort;
+            CGContextRef context             = bitmapContext.CGContext;
 
             CGContextDrawImage(context, CPTRectMake(0.0, 0.0, imageSize.width, imageSize.height), imageRef);
 
@@ -753,7 +753,7 @@ CPTImageSlices;
             NSRect drawingRect = NSMakeRect(0.0, 0.0, imageSize.width, imageSize.height);
 
             theImage = [theNativeImage CGImageForProposedRect:&drawingRect
-                                                      context:[NSGraphicsContext graphicsContextWithGraphicsPort:context flipped:NO]
+                                                      context:[NSGraphicsContext graphicsContextWithCGContext:context flipped:NO]
                                                         hints:nil];
             self.scale = contextScale;
 #endif

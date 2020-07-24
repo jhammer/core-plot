@@ -32,7 +32,7 @@ void CPTPushCGContext(__nonnull CGContextRef newContext)
         }
 
         if ( newContext ) {
-            [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithGraphicsPort:newContext flipped:NO]];
+            [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithCGContext:newContext flipped:NO]];
         }
     });
 }
@@ -95,7 +95,7 @@ CPTRGBAColor CPTRGBAColorFromNSColor(NSColor *__nonnull nsColor)
 {
     CGFloat red, green, blue, alpha;
 
-    [[nsColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&red green:&green blue:&blue alpha:&alpha];
+    [[nsColor colorUsingColorSpace:NSColorSpace.genericRGBColorSpace] getRed:&red green:&green blue:&blue alpha:&alpha];
 
     CPTRGBAColor rgbColor;
     rgbColor.red   = red;
@@ -125,7 +125,7 @@ CPTNativeImage *__nonnull CPTQuickLookImage(CGRect rect, __nonnull CPTQuickLookI
 
     NSGraphicsContext *bitmapContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:layerImage];
 
-    CGContextRef context = (CGContextRef)bitmapContext.graphicsPort;
+    CGContextRef context = bitmapContext.CGContext;
 
     CGContextClearRect(context, rect);
 
